@@ -89,7 +89,7 @@
 <p>Regarding point #2, I wanted a small, fast, and performant website that “just worked” every time, and that even hamster-powered networks could load. I decided a templating solution would work well for me.</p>
 <p>Enter point #1. Hosting is rather cheap, specially for my use-case: hosting a static, template-based website. Enter <a href="https://pages.github.com/">GitHub Pages</a> and their free hosting. Oh, what is that? They user Jekyll under the hood too? <em>And</em> they support custom URLs with SSL enabled? Bingo.</p>
 <p>Why do I need SSL, you might ask? Simple. My chosen domain has a <code class="highlighter-rouge">.dev</code> TLD, meaning I need HTTPS for all requests.</p>
-<p>You can see the source code for this website in my GitHub profile: <a href="https://github.com/Avyiel/lucasvienna.dev">https://github.com/Avyiel/lucasvienna.dev</a></p>
+<p>You can see the source code for this website in my GitHub profile: <a href="https://github.com/Avyiel/blog-demo">https://github.com/Avyiel/blog-demo</a></p>
 <h1 id="setting-up">Setting up</h1>
 <h2 id="git">Git</h2>
 <p>First order of business is setting up an orphan branch on your repository that will be used to deploy your website:</p>
@@ -104,9 +104,7 @@
 <p>Then, we configure our GitHub repository to use GitHub Pages, and use our newly pushed branch as the source:</p>
 <p>Go to “Settings” and scroll down to the “Pages” section. If everything worked well, you should see the following:</p>
 <p><img src="/assets/images/portfolio/options-gh-pages.png" alt="Options - Pages" /></p>
-<ul>
-  <li>If not, first enable Pages, and then choose our recently-created <code class="highlighter-rouge">gh-pages</code> branch as the source.</li>
-</ul>
+<p>If not, first enable Pages, and then choose our recently-created <code class="highlighter-rouge">gh-pages</code> branch as the source.</p>
 <h2 id="custom-domain">Custom Domain</h2>
 <p>If you have a custom domain and wish to use it, this is the time to type it in the designated field. It will generate a <code class="highlighter-rouge">CNAME</code> file in the root of your repository, but you’ll still need to edit your DNS records. GitHub has excellent documentation on how to do this, so simply follow the instructions <a href="https://help.github.com/en/articles/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain">on their own help page</a> to set your DNS records up. It should look somewhat like this after you’re done:</p>
 <p><img src="/assets/images/portfolio/dns-records.png" alt="DNS Records" /></p>
@@ -122,12 +120,14 @@
 <p><img src="/assets/images/portfolio/jekyll-token-env.png" alt="Environment Variable JEKYLL_GITHUB_TOKEN" /></p>
 <p>Lastly, create a third environment variable, named <em>“JEKYLL_ENV”</em>, enter <code class="highlighter-rouge">production</code> in the value field and make sure <em>“Display value in build log”</em> is <strong>checked</strong>.</p>
 <p><img src="/assets/images/portfolio/jekyll-env-env.png" alt="Environment Variable JEKYLL_ENV" /></p>
-<ul>
-  <li>It should look like this in the end:</li>
-</ul>
+<p>It should look like this in the end:</p>
 <p><img src="/assets/images/portfolio/env-vars.png" alt="Environment Variables" /></p>
 <h1 id="jekyll">Jekyll</h1>
-<p>Now that we have our tooling all set up, it’s time to actually write our website. I am working under the assumption that your repository only has 3 files: <code class="highlighter-rouge">LICENSE</code>, <code class="highlighter-rouge">README.md</code>, and <code class="highlighter-rouge">CNAME</code>. If you already have more things (say, some posts, assets and theme), you can port them later on. Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones.</p>
+<p>Now that we have our tooling all set up, it’s time to actually write our website. I am working under the assumption that your repository only has 3 files: <code class="highlighter-rouge">LICENSE</code>, <code class="highlighter-rouge">README.md</code>, and <code class="highlighter-rouge">CNAME</code>.</p>
+<blockquote>
+  <p>If you already have more things (say, some posts, assets and theme), you can port them later on.</p>
+</blockquote>
+<p>Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones.</p>
 <p>From the <a href="https://jekyllrb.com/docs/">Jekyll website</a>:</p>
 <ul>
   <li>Install a <a href="https://jekyllrb.com/docs/installation/macos/#install-ruby">full Ruby development environment</a></li>
@@ -172,7 +172,10 @@
 <p>You will have noticed that I added <code class="highlighter-rouge">dotenv</code> to our list of dependencies. This comes into play later on, in order to let us fetch GitHub metadata using that token we created earlier.</p>
 <p>Now, install/update these gems:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>bundle install</code></pre></figure>
-<p>Next up, configure your Jekyll environment. Open <code class="highlighter-rouge">_config.yml</code> in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. Since I’ll be using my own theme and no plugins, I’ve removed those. Also remove the theme gem from your Gemfile if you’re not using one. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.</p>
+<p>Next up, configure your Jekyll environment. Open <code class="highlighter-rouge">_config.yml</code> in your favourite editor and read through the comments, it should give you a good idea of what is useful for you or not. A few entries you should have in there are shown below. Remember to replace the actual values with your own information.</p>
+<blockquote>
+  <p>Since I’ll be using my own theme and no plugins, I’ve removed those entries. Also remove the theme gem from your Gemfile if you’re not using one.</p>
+</blockquote>
 <figure class="highlight"><pre><code class="language-yml" data-lang="yml"><span class="c1"># Site settings</span>
 <span class="na">title</span><span class="pi">:</span> <span class="s">My title</span>
 <span class="na">subtitle</span><span class="pi">:</span> <span class="s">A subtitle</span>
@@ -213,8 +216,20 @@
 <span class="na">show_github</span><span class="pi">:</span> <span class="no">false</span>
 <span class="na">show_downloads</span><span class="pi">:</span> <span class="no">false</span></code></pre></figure>
 <h2 id="adding-theming-support">Adding theming support</h2>
-<p>For this part, those folders you created earlier come in handy. Jekyll uses specially-named folders to generate your website. <code class="highlighter-rouge">_layouts_</code> is what the name suggests, and describes how different pages can be formatted, AKA your templates. <code class="highlighter-rouge">_includes</code> holds snippets of a sort, smaller components you can insert into any page (read: in your templates). <code class="highlighter-rouge">_sass</code> contains our SASS files, the normaizer, and the <code class="highlighter-rouge">rouge</code> highlighter. <code class="highlighter-rouge">assets</code> contains our images and the entry point for the whole SASS business. Let’s start there.</p>
-<p>Create a new folder inside <code class="highlighter-rouge">assets</code>, and add the SASS entrypoint:</p>
+<p>For this part, those folders you created earlier come in handy. Jekyll uses specially-named folders to generate your website.</p>
+<blockquote>
+  <p><code class="highlighter-rouge">_layouts</code> is what the name suggests, and describes how different pages can be formatted, AKA your templates.</p>
+</blockquote>
+<blockquote>
+  <p><code class="highlighter-rouge">_includes</code> holds snippets of a sort, smaller components you can insert into any page (read: in your templates).</p>
+</blockquote>
+<blockquote>
+  <p><code class="highlighter-rouge">_sass</code> contains our SASS files, the normaizer, and the <code class="highlighter-rouge">rouge</code> highlighter.</p>
+</blockquote>
+<blockquote>
+  <p><code class="highlighter-rouge">assets</code> contains our images and the entry point for the whole SASS business. Let’s start there.</p>
+</blockquote>
+<p>Create a new folder inside <code class="highlighter-rouge">assets</code>, and add the CSS entrypoint:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>mkdir <span class="nt">-p</span> assets/css
 <span class="nv">$ </span>touch assets/css/styles.scss</code></pre></figure>
 <p>Now paste this into <code class="highlighter-rouge">styles.scss</code>:</p>
@@ -222,7 +237,9 @@
 <span class="nt">---</span>
 
 <span class="o">@</span><span class="nt">import</span> <span class="s1">'theme'</span><span class="p">;</span></code></pre></figure>
-<p>This snippet is responsible for loading our main SASS file, <code class="highlighter-rouge">theme.scss</code>. Do not remove those hyphens at the start. The are required by Jekyll.</p>
+<blockquote>
+  <p>This snippet is responsible for loading our main SASS file, <code class="highlighter-rouge">theme.scss</code>. Do not remove those hyphens at the start; they are the front matter, and are required by Jekyll.</p>
+</blockquote>
 <p>Next up, let’s install <code class="highlighter-rouge">rouge</code>. Since Jekyll is stuck with Rouge <code class="highlighter-rouge">2.2.1</code> (<a href="https://github.com/github/pages-gem/pull/652">see this GitHub issue</a>), we’ll poach an updated SCSS version of it from the Cayman theme. Head over to <a href="https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss">https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss</a>, download this file and save it in your own <code class="highlighter-rouge">_scss</code> folder. Once Jekyll upgrades, I will update this article accordingly.</p>
 <p>To install <code class="highlighter-rouge">compress_html</code>, head over to <a href="http://jch.penibelst.de/">http://jch.penibelst.de/</a> and follow their instructions. You’ll end up with two new files inside your <code class="highlighter-rouge">_layouts</code> folder: <code class="highlighter-rouge">compress.html</code> and <code class="highlighter-rouge">default.html</code>. We’ll go over the default layout later on.</p>
 <p>Then, install <code class="highlighter-rouge">normalize.css</code>. All you need to do is copy the contents from <a href="https://github.com/necolas/normalize.css/blob/master/normalize.css">the source page</a> and save it as <code class="highlighter-rouge">normalize.scss</code>.</p>
