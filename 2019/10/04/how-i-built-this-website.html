@@ -100,16 +100,17 @@
 <h1 id="setting-up">Setting up</h1>
 <h2 id="git">Git</h2>
 <p>First order of business is setting up an orphan branch on your repository that will be used to deploy your website:</p>
-<p>Inside your website’s root, create a new orphan branch and push it:</p>
+<p>Inside your website’s root, create a new orphan branch and push it. Then, move back to the master branch, since we’ll do all our work there.</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>git checkout <span class="nt">--orphan</span> gh-pages
 <span class="nv">$ </span>git rm <span class="nt">-rf</span> <span class="nb">.</span>
 <span class="nv">$ </span><span class="nb">echo</span> <span class="s2">"Placeholder page"</span> <span class="o">&gt;</span> index.html
 <span class="nv">$ </span>git add index.html
 <span class="nv">$ </span>git commit <span class="nt">-a</span> <span class="nt">-m</span> <span class="s2">"Placeholder page"</span>
-<span class="nv">$ </span>git push origin gh-pages</code></pre></figure>
+<span class="nv">$ </span>git push origin gh-pages
+<span class="nv">$ </span>git checkout master</code></pre></figure>
 <h2 id="github">GitHub</h2>
-<p>Then, we configure our GitHub repository to use GitHub Pages, and use our newly pushed branch as the source:</p>
-<p>Go to “Settings” and scroll down to the “Pages” section. If everything worked well, you should see the following:</p>
+<p>Once our orphan branch has been pushed, we need configure our GitHub repository to use GitHub Pages, and use our new branch as the source:</p>
+<p>In your repository page, go to “Settings” and scroll down to the “Pages” section. If everything worked well, you should see the following:</p>
 <p><img src="/assets/images/portfolio/options-gh-pages.png" alt="Options - Pages" /></p>
 <p>If not, first enable Pages, and then choose our recently-created <code class="highlighter-rouge">gh-pages</code> branch as the source.</p>
 <h2 id="custom-domain">Custom Domain</h2>
@@ -134,7 +135,7 @@
 <blockquote>
   <p>If you already have more things (say, some posts, assets and theme), you can port them later on.</p>
 </blockquote>
-<p>Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones.</p>
+<p>Also, I am working on macOS, so the instructions here apply to this OS. If you have a different one, make sure to change commands to their equivalent ones. Remember to read the commands before running them. Also, swap out <code class="highlighter-rouge">myblog</code> for your chosen repository name, else this won’t work.</p>
 <p>From the <a href="https://jekyllrb.com/docs/">Jekyll website</a>:</p>
 <ul>
   <li>Install a <a href="https://jekyllrb.com/docs/installation/macos/#install-ruby">full Ruby development environment</a></li>
@@ -161,12 +162,12 @@
   <li>Build the site and make it available on a local server</li>
 </ul>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>bundle <span class="nb">exec </span>jekyll serve</code></pre></figure>
-<p>Obviously, swap out <code class="highlighter-rouge">myblog</code> for your chosen repository name. If everything went according to plan, you sould see something like this in your browser:</p>
+<p>If everything went according to plan, you sould see something like this in your browser:</p>
 <p><img src="/assets/images/portfolio/default-site.png" alt="Default Jekyll Website" /></p>
 <h2 id="customizing-your-installation">Customizing your installation</h2>
 <p>Now for the interesting part: making that site yours. Go ahead and create a few folders:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nv">$ </span>mkdir _layouts _includes _sass assets</code></pre></figure>
-<p>Then, clean up your Gemfile. It comes heavily commented and has some unnecessary gems, namely the Windows-relate ones. If you’re on Windows, do keep those gems in there.</p>
+<p>Then, clean up your Gemfile. It comes heavily commented and has some unnecessary gems, namely the Windows-related ones. If you’re on Windows, do keep those gems in there.</p>
 <figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
 
 <span class="c1"># GitHub Pages. To upgrade, run `bundle update github-pages`</span>
@@ -248,10 +249,10 @@
 <blockquote>
   <p>This snippet is responsible for loading our main SASS file, <code class="highlighter-rouge">theme.scss</code>. Do not remove those hyphens at the start; they are the front matter, and are required by Jekyll.</p>
 </blockquote>
-<p>Next up, let’s install <code class="highlighter-rouge">rouge</code>. Since Jekyll is stuck with Rouge <code class="highlighter-rouge">2.2.1</code> (<a href="https://github.com/github/pages-gem/pull/652">see this GitHub issue</a>), we’ll poach an updated SCSS version of it from the Cayman theme. Head over to <a href="https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss">https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss</a>, download this file and save it in your own <code class="highlighter-rouge">_scss</code> folder. Once Jekyll upgrades, I will update this article accordingly.</p>
+<p>Next up, let’s install <code class="highlighter-rouge">rouge</code>. Since Jekyll is stuck with Rouge <code class="highlighter-rouge">2.2.1</code> (<a href="https://github.com/github/pages-gem/pull/652">see this GitHub issue</a>), we’ll poach an updated SCSS version of it from the Cayman theme. Head over to <a href="https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss">https://github.com/pages-themes/cayman/blob/master/_sass/rouge-github.scss</a>, download this file and save it in your own <code class="highlighter-rouge">_sass</code> folder. Once Jekyll upgrades, I will update this article accordingly.</p>
 <p>To install <code class="highlighter-rouge">compress_html</code>, head over to <a href="http://jch.penibelst.de/">http://jch.penibelst.de/</a> and follow their instructions. You’ll end up with two new files inside your <code class="highlighter-rouge">_layouts</code> folder: <code class="highlighter-rouge">compress.html</code> and <code class="highlighter-rouge">default.html</code>. We’ll go over the default layout later on.</p>
-<p>Then, install <code class="highlighter-rouge">normalize.css</code>. All you need to do is copy the contents from <a href="https://github.com/necolas/normalize.css/blob/master/normalize.css">the source page</a> and save it as <code class="highlighter-rouge">normalize.scss</code>.</p>
-<p>Lastly, create the <code class="highlighter-rouge">theme.scss</code> file and paste the following inside:</p>
+<p>Then, install <code class="highlighter-rouge">normalize.css</code>. All you need to do is copy the contents from <a href="https://github.com/necolas/normalize.css/blob/master/normalize.css">the source page</a> and save it as <code class="highlighter-rouge">normalize.scss</code> inside your <code class="highlighter-rouge">_sass</code> folder.</p>
+<p>Lastly, create a file called <code class="highlighter-rouge">theme.scss</code> inside <code class="highlighter-rouge">_sass</code> and paste the following inside:</p>
 <figure class="highlight"><pre><code class="language-scss" data-lang="scss"><span class="c1">// sensible normalized styles
 </span><span class="k">@import</span> <span class="s2">"normalize"</span><span class="p">;</span>
 <span class="c1">// code highliting
@@ -304,6 +305,18 @@
       >
         <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <path d="M12 .02c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6.99 6.98l-6.99 5.666-6.991-5.666h13.981zm.01 10h-14v-8.505l7 5.673 7-5.672v8.504z" />
+        </svg>
+      </a>
+    </span>
+    <span class="footer-icon">
+      <a
+        rel="me"
+        href="https://mastodon.social/@lucasvienna"
+        title="Mastodon"
+        aria-label="Mastodon"
+      >
+        <svg class="footer-svg-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+          <path d="M 15.9375 4.03125 C 12.917 4.0435 9.9179219 4.4269844 8.3574219 5.1464844 C 8.3574219 5.1464844 5 6.6748594 5 11.880859 C 5 18.077859 4.9955 25.860234 10.5625 27.365234 C 12.6945 27.938234 14.527953 28.061562 16.001953 27.976562 C 18.676953 27.825562 20 27.005859 20 27.005859 L 19.910156 25.029297 C 19.910156 25.029297 18.176297 25.640313 16.029297 25.570312 C 13.902297 25.495313 11.6615 25.335688 11.3125 22.679688 C 11.2805 22.432688 11.264625 22.182594 11.265625 21.933594 C 15.772625 23.052594 19.615828 22.420969 20.673828 22.292969 C 23.627828 21.933969 26.199344 20.081672 26.527344 18.388672 C 27.041344 15.720672 26.998047 11.880859 26.998047 11.880859 C 26.998047 6.6748594 23.646484 5.1464844 23.646484 5.1464844 C 22.000984 4.3779844 18.958 4.019 15.9375 4.03125 z M 12.705078 8.0019531 C 13.739953 8.0297031 14.762578 8.4927031 15.392578 9.4707031 L 16.001953 10.505859 L 16.609375 9.4707031 C 17.874375 7.5037031 20.709594 7.6264375 22.058594 9.1484375 C 23.302594 10.596438 23.025391 11.531 23.025391 18 L 23.025391 18.001953 L 20.578125 18.001953 L 20.578125 12.373047 C 20.578125 9.7380469 17.21875 9.6362812 17.21875 12.738281 L 17.21875 16 L 14.787109 16 L 14.787109 12.738281 C 14.787109 9.6362812 11.429688 9.7360938 11.429688 12.371094 L 11.429688 18 L 8.9765625 18 C 8.9765625 11.526 8.7043594 10.585438 9.9433594 9.1484375 C 10.622859 8.3824375 11.670203 7.9742031 12.705078 8.0019531 z"></path>
         </svg>
       </a>
     </span>
