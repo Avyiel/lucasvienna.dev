@@ -28,7 +28,7 @@
     <link rel="canonical" href="https://lucasvienna.dev/dotfiles">
     <link rel="shortcut icon" href="https://lucasvienna.dev/favicon.ico">
     <meta name="robots" content="noarchive">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:200,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/styles.css">
@@ -61,6 +61,9 @@
     <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/portfolio">Portfolio</a>
             </li>
       </ul>
     </div>
@@ -106,17 +109,17 @@
   <li>Xcode Command Line Tools (CLT)</li>
   <li>git</li>
 </ol>
-<p>Git is there to clone the repository, and Xcode for its build tools. Git comes pre-installed in macOS so no extra work there. Xcode can be found in the App Store, and you will have to run <code class="highlighter-rouge">xcode-select --install</code> after installing it. All the rest will be handled by the script.</p>
+<p>Git is there to clone the repository, and Xcode for its build tools. Git comes pre-installed in macOS so no extra work there. Xcode can be found in the App Store, and you will have to run <code class="language-plaintext highlighter-rouge">xcode-select --install</code> after installing it. All the rest will be handled by the script.</p>
 <h2 id="usage">Usage</h2>
-<p>To use my dotfiles, the easiest way is to clone the repository and run the <code class="highlighter-rouge">bootstrap.sh</code> script. It will handle installing homebrew (and all the bottles and casks you’ll need), oh-my-zsh, vim-plug and much more! I’ll go over the details below.</p>
+<p>To use my dotfiles, the easiest way is to clone the repository and run the <code class="language-plaintext highlighter-rouge">bootstrap.sh</code> script. It will handle installing homebrew (and all the bottles and casks you’ll need), oh-my-zsh, vim-plug and much more! I’ll go over the details below.</p>
 <p>First off, clone the repository:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell">git clone git@github.com:Avyiel/lucasvienna.dev.git ~/dotfiles</code></pre></figure>
-<p>This will download the GitHub repo I linked above and put it in <code class="highlighter-rouge">~/dotfiles</code>. Then, move into the cloned folder and run the script:</p>
+<p>This will download the GitHub repo I linked above and put it in <code class="language-plaintext highlighter-rouge">~/dotfiles</code>. Then, move into the cloned folder and run the script:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">cd</span> ~/dotfiles
 ./bootstrap.sh</code></pre></figure>
 <p>And… that’s it. Theoretically, you’re done. The script will handle everything in a hands-off manner. You might have to press enter a few times to confirm changes or installations though.</p>
 <p>If you want to host your own copy of these dotfiles, reset the local repo and initialize your own:</p>
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell">rm <span class="nt">-rf</span> .git
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">rm</span> <span class="nt">-rf</span> .git
 git init
 git remote add &lt;your repository URL here&gt;
 git add <span class="nb">.</span>
@@ -125,7 +128,7 @@ git push <span class="nt">-u</span> origin all</code></pre></figure>
 <h2 id="explanation">Explanation</h2>
 <p>Or “what the hell will this script do to my beloved machine?”.</p>
 <h3 id="bootstrap">Bootstrap</h3>
-<p>Let’s start with what’s in <code class="highlighter-rouge">bootstrap.sh</code>:</p>
+<p>Let’s start with what’s in <code class="language-plaintext highlighter-rouge">bootstrap.sh</code>:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell">git pull origin master</code></pre></figure>
 <p>This line simply pulls the latest changes from the repository. Just to make sure you’re up-to-date with my latest additions or fixes. Then we have:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">function </span>spaceship<span class="o">()</span> <span class="o">{</span>
@@ -136,10 +139,10 @@ git push <span class="nt">-u</span> origin all</code></pre></figure>
     </span><span class="nb">echo</span> <span class="s2">"spaceship-prompt is already installed, skipping..."</span>
   <span class="k">else
     </span>git clone https://github.com/denysdovhan/spaceship-prompt.git <span class="s2">"</span><span class="nv">$ZSH</span><span class="s2">/custom/themes/spaceship-prompt"</span>
-    ln <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$ZSH</span><span class="s2">/custom/themes/spaceship-prompt/spaceship.zsh-theme"</span> <span class="s2">"</span><span class="nv">$ZSH</span><span class="s2">/custom/themes/spaceship.zsh-theme"</span>
+    <span class="nb">ln</span> <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$ZSH</span><span class="s2">/custom/themes/spaceship-prompt/spaceship.zsh-theme"</span> <span class="s2">"</span><span class="nv">$ZSH</span><span class="s2">/custom/themes/spaceship.zsh-theme"</span>
   <span class="k">fi</span>
 <span class="o">}</span></code></pre></figure>
-<p>This defines a function called <code class="highlighter-rouge">spaceship</code> that will, as per the comment, install the spaceship theme for zsh. It checks for an already-present installation and then clones and symlinks the theme. Pretty simple stuff. Moving on:</p>
+<p>This defines a function called <code class="language-plaintext highlighter-rouge">spaceship</code> that will, as per the comment, install the spaceship theme for zsh. It checks for an already-present installation and then clones and symlinks the theme. Pretty simple stuff. Moving on:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">function </span>italicTerm<span class="o">()</span> <span class="o">{</span>
   tic <span class="nt">-x</span> terminfo/xterm-256color-italic.terminfo
   tic <span class="nt">-x</span> terminfo/tmux-256color.terminfo
@@ -149,12 +152,12 @@ git push <span class="nt">-u</span> origin all</code></pre></figure>
   ./brew.sh
 
   <span class="c"># install homebrew</span>
-  ruby <span class="nt">-e</span> <span class="s2">"</span><span class="k">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">"</span>
+  ruby <span class="nt">-e</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/Homebrew/install/master/install<span class="si">)</span><span class="s2">"</span>
   <span class="c"># install vim-plug</span>
   curl <span class="nt">-fLo</span> ~/.local/share/nvim/site/autoload/plug.vim <span class="nt">--create-dirs</span> <span class="se">\</span>
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   <span class="c"># install oh-my-zsh</span>
-  sh <span class="nt">-c</span> <span class="s2">"</span><span class="k">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="k">)</span><span class="s2">"</span> <span class="s2">""</span> <span class="nt">--unattended</span>
+  sh <span class="nt">-c</span> <span class="s2">"</span><span class="si">$(</span>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh<span class="si">)</span><span class="s2">"</span> <span class="s2">""</span> <span class="nt">--unattended</span>
 
   <span class="c"># link dotfiles</span>
   stow tmux
@@ -163,7 +166,7 @@ git push <span class="nt">-u</span> origin all</code></pre></figure>
   stow git
 
   <span class="c"># install nvim plugins and python addon</span>
-  pip3 install <span class="nt">--user</span> <span class="nt">--upgrade</span> neovim
+  pip3 <span class="nb">install</span> <span class="nt">--user</span> <span class="nt">--upgrade</span> neovim
   nvim +PlugClean! +qall
   nvim +silent +PlugInstall +qall
   python3 ~/.config/nvim/plugged/YouCompleteMe/install.py
@@ -174,7 +177,7 @@ git push <span class="nt">-u</span> origin all</code></pre></figure>
   <span class="c"># launch the spaceship</span>
   spaceship
 <span class="o">}</span></code></pre></figure>
-<p>The meat of this script. It “just does it” all. First off, we’re calling another script: <code class="highlighter-rouge">brew.sh</code>. We’ll go over what that one does a bit later. Then we install homebrew (an awesome package manager for macOS), vim-plug (a plugin manager for vim/neovim), and oh-my-zsh (a theme/plugin manager for zsh). Afterwards, it uses GNU <code class="highlighter-rouge">stow</code> to symlink all the actual dotfiles into your home directory. Stow is pretty neat in that it keeps the folder structure intact while doing the symlinking.
+<p>The meat of this script. It “just does it” all. First off, we’re calling another script: <code class="language-plaintext highlighter-rouge">brew.sh</code>. We’ll go over what that one does a bit later. Then we install homebrew (an awesome package manager for macOS), vim-plug (a plugin manager for vim/neovim), and oh-my-zsh (a theme/plugin manager for zsh). Afterwards, it uses GNU <code class="language-plaintext highlighter-rouge">stow</code> to symlink all the actual dotfiles into your home directory. Stow is pretty neat in that it keeps the folder structure intact while doing the symlinking.
 Then we set neovim up with its plugins, the tmux plugin manager (tpm), and lastly we install our theme.</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"--force"</span> <span class="nt">-o</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span> <span class="o">==</span> <span class="s2">"-f"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
   </span>doIt
@@ -187,14 +190,14 @@ Then we set neovim up with its plugins, the tmux plugin manager (tpm), and lastl
     italicTerm
   <span class="k">fi</span><span class="p">;</span>
 <span class="k">fi</span><span class="p">;</span></code></pre></figure>
-<p>This part asks you if you actually want to do it. You can also call the script with <code class="highlighter-rouge">--force</code> or <code class="highlighter-rouge">-f</code> to skip the prompt and “just do it”. Lastly:</p>
+<p>This part asks you if you actually want to do it. You can also call the script with <code class="language-plaintext highlighter-rouge">--force</code> or <code class="language-plaintext highlighter-rouge">-f</code> to skip the prompt and “just do it”. Lastly:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell"><span class="nb">unset </span>doIt
 <span class="nb">unset </span>italicTerm
 <span class="nb">unset </span>spaceship</code></pre></figure>
 <p>We unset the functions created so you won’t accidentally mess your system up. Neat!</p>
-<p>You should be saying something in the lines of “hold up! There’s another script running here that you didn’t explain yet”, and you’re absolutely right. Onto <code class="highlighter-rouge">brew.sh</code>.</p>
+<p>You should be saying something in the lines of “hold up! There’s another script running here that you didn’t explain yet”, and you’re absolutely right. Onto <code class="language-plaintext highlighter-rouge">brew.sh</code>.</p>
 <h3 id="homebrew-bottles--casks">Homebrew Bottles &amp; Casks</h3>
-<p>This pretty little script is a big mess, really. It calls <code class="highlighter-rouge">brew install</code> <strong>22</strong> times. I could use backslashes and do it all in a single command. I might change that at a later date, but for now it serves its purpose: to pour bottles and casks. That’s homebrew slang for “install CLI programs and macOS applications”. Instead of going over all the code in the script (I still recommend you go through it before running <code class="highlighter-rouge">bootstrap.sh</code>), I’ll just list all the stuff it installs. If you don’t need/want anything, simply remove that line or comment it out.</p>
+<p>This pretty little script is a big mess, really. It calls <code class="language-plaintext highlighter-rouge">brew install</code> <strong>22</strong> times. I could use backslashes and do it all in a single command. I might change that at a later date, but for now it serves its purpose: to pour bottles and casks. That’s homebrew slang for “install CLI programs and macOS applications”. Instead of going over all the code in the script (I still recommend you go through it before running <code class="language-plaintext highlighter-rouge">bootstrap.sh</code>), I’ll just list all the stuff it installs. If you don’t need/want anything, simply remove that line or comment it out.</p>
 <h4 id="bottles">Bottles</h4>
 <ul>
   <li>coreutils</li>
@@ -249,28 +252,28 @@ Then we set neovim up with its plugins, the tmux plugin manager (tpm), and lastl
 <p>Next up, let’s talk about the actual configuration in my dotfiles.</p>
 <h2 id="the-dotfiles-themselves">The dotfiles themselves</h2>
 <h3 id="git">git</h3>
-<p>Stow will link two files: <code class="highlighter-rouge">.gitconfig</code> and <code class="highlighter-rouge">.gitignore_global</code>. The latter tells git which files to <em>not</em> track. The first one sets git up. There are a few things you should change, under the <code class="highlighter-rouge">[user]</code> tag:</p>
+<p>Stow will link two files: <code class="language-plaintext highlighter-rouge">.gitconfig</code> and <code class="language-plaintext highlighter-rouge">.gitignore_global</code>. The latter tells git which files to <em>not</em> track. The first one sets git up. There are a few things you should change, under the <code class="language-plaintext highlighter-rouge">[user]</code> tag:</p>
 <figure class="highlight"><pre><code class="language-shell" data-lang="shell">name <span class="o">=</span> Lucas Vienna
 email <span class="o">=</span> dev@lucasvienna.dev
 signingkey <span class="o">=</span> 1E763A1C0C9B66CD</code></pre></figure>
-<p>This is obviously my own information and data. You should put your own info in there. This config file also sets <code class="highlighter-rouge">vimdiff</code> as the merge tool, tells git to GPG-sign all commits, sets the default pull behavior to rebase instead of merge and adds a few handy aliases.</p>
+<p>This is obviously my own information and data. You should put your own info in there. This config file also sets <code class="language-plaintext highlighter-rouge">vimdiff</code> as the merge tool, tells git to GPG-sign all commits, sets the default pull behavior to rebase instead of merge and adds a few handy aliases.</p>
 <h3 id="tmux">tmux</h3>
 <p>Now this is where it gets interesting. tmux is argually the best <strong>t</strong>erminal <strong>mu</strong>ltiple<strong>x</strong>er out there, and I love using it. No more dropped SSH connections, no more fiddling around with a ton of tabs or windows and no more ugly emulator. Stuff you might want to change:</p>
 <ul>
-  <li><code class="highlighter-rouge">set -g prefix C-a</code>: the prefix for tmux commands. I use Control + a</li>
-  <li><code class="highlighter-rouge">set-option -g status-position top</code>: status bar position. I put it on top</li>
-  <li><code class="highlighter-rouge">set -g @plugin</code>: lots of things start with this command. Check to see if the plugins suit you</li>
+  <li><code class="language-plaintext highlighter-rouge">set -g prefix C-a</code>: the prefix for tmux commands. I use Control + a</li>
+  <li><code class="language-plaintext highlighter-rouge">set-option -g status-position top</code>: status bar position. I put it on top</li>
+  <li><code class="language-plaintext highlighter-rouge">set -g @plugin</code>: lots of things start with this command. Check to see if the plugins suit you</li>
 </ul>
 <h3 id="neovim">neovim</h3>
 <p>IMO the best editor for the CLI. I use VS Code for the most part, but neovim is also excellent. There aren’t any defaults you <em>must</em> change (unlike git), so just go over the entire thing and modify it to your liking.</p>
 <h3 id="zsh--oh-my-zsh">zsh / oh-my-zsh</h3>
-<p>I love this shell. Autocompletion works wonders, plugins are amazing and we even get syntax highlighting. Things you should definitely change in <code class="highlighter-rouge">.zshrc</code>:</p>
+<p>I love this shell. Autocompletion works wonders, plugins are amazing and we even get syntax highlighting. Things you should definitely change in <code class="language-plaintext highlighter-rouge">.zshrc</code>:</p>
 <ul>
-  <li><code class="highlighter-rouge">export ZSH="/Users/lucas/.oh-my-zsh"</code>: change this to point to your own home directory. Absolute path is better here</li>
-  <li><code class="highlighter-rouge">export SSH_KEY_PATH="~/.ssh/rsa_id"</code>: point this to wherever your key is</li>
+  <li><code class="language-plaintext highlighter-rouge">export ZSH="/Users/lucas/.oh-my-zsh"</code>: change this to point to your own home directory. Absolute path is better here</li>
+  <li><code class="language-plaintext highlighter-rouge">export SSH_KEY_PATH="~/.ssh/rsa_id"</code>: point this to wherever your key is</li>
 </ul>
 <p>For the rest, go over the file and change it to suit you. It’s heavily commented and you can always just nuke it (oh-my-zsh will create a new one for you).</p>
-<p>Also check the stuff in <code class="highlighter-rouge">.zsh_aliases</code> under the <code class="highlighter-rouge"># Directories</code> and <code class="highlighter-rouge"># SSH</code> comments. These point to work dirs in my machine, maybe delete them or add your own stuff. Also, read over the rest of the aliases, some of them are really useful.</p>
+<p>Also check the stuff in <code class="language-plaintext highlighter-rouge">.zsh_aliases</code> under the <code class="language-plaintext highlighter-rouge"># Directories</code> and <code class="language-plaintext highlighter-rouge"># SSH</code> comments. These point to work dirs in my machine, maybe delete them or add your own stuff. Also, read over the rest of the aliases, some of them are really useful.</p>
 <p>I don’t have git aliases set up in there because of the git plugin for oh-my-zsh, except for a few extras not already included.</p>
 <p>And… that’s all I have for now. Have fun with your new dotfiles!</p>
   </div>

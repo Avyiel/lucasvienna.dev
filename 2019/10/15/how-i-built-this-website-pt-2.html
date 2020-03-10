@@ -28,7 +28,7 @@
     <link rel="canonical" href="https://lucasvienna.dev/2019/10/15/how-i-built-this-website-pt-2.html">
     <link rel="shortcut icon" href="https://lucasvienna.dev/favicon.ico">
     <meta name="robots" content="noarchive">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:200,400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/styles.css">
@@ -62,6 +62,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/about">About</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/portfolio">Portfolio</a>
+            </li>
       </ul>
     </div>
   </nav>
@@ -85,7 +88,7 @@
   <div itemprop="articleBody">
     <p>Specifically, how I used Jekyll and GitHub Pages to generate my website and how to automate builds and deployments with Travis CI. On this part, I’ll go over the layouts and included page snippets necessary to populate every page.</p>
 <h2 id="default-layout">Default layout</h2>
-<p>How about we create a baseplate for your pages? Let’s start with the default layout. If you’ve done everything corretly so far, your <code class="highlighter-rouge">default.html</code> should look like this:</p>
+<p>How about we create a baseplate for your pages? Let’s start with the default layout. If you’ve done everything corretly so far, your <code class="language-plaintext highlighter-rouge">default.html</code> should look like this:</p>
 <figure class="highlight"><pre><code class="language-html" data-lang="html">---
 layout: compress
 ---
@@ -137,10 +140,10 @@ layout: compress
     {% include footer.html %}
   <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span></code></pre></figure>
-<p>You will get a few build errors complaining about missing files. That’s expected, since I use a few import tags in this snippet, but we have no files corresponding to these tags. Let me first do a quick overview of what you just pasted, skipping the <code class="highlighter-rouge">include</code> tags.</p>
+<p>You will get a few build errors complaining about missing files. That’s expected, since I use a few import tags in this snippet, but we have no files corresponding to these tags. Let me first do a quick overview of what you just pasted, skipping the <code class="language-plaintext highlighter-rouge">include</code> tags.</p>
 <hr />
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"{{ page.lang | default: site.lang | default: "</span><span class="na">en</span><span class="err">"</span> <span class="err">}}"</span><span class="nt">&gt;</span></code></pre></figure>
-<p>This line tell the browser the language of your website. It defaults to <code class="highlighter-rouge">en</code> if neither <code class="highlighter-rouge">page.lang</code> nor <code class="highlighter-rouge">site.lang</code> are set. You can specify a custom, non-English language in your <code class="highlighter-rouge">_config.yml</code> by setting the <code class="highlighter-rouge">lang</code> tag or in your post’s front matter.</p>
+<p>This line tell the browser the language of your website. It defaults to <code class="language-plaintext highlighter-rouge">en</code> if neither <code class="language-plaintext highlighter-rouge">page.lang</code> nor <code class="language-plaintext highlighter-rouge">site.lang</code> are set. You can specify a custom, non-English language in your <code class="language-plaintext highlighter-rouge">_config.yml</code> by setting the <code class="language-plaintext highlighter-rouge">lang</code> tag or in your post’s front matter.</p>
 <hr />
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"theme-color"</span> <span class="na">content=</span><span class="s">"#bb1f39"</span><span class="nt">&gt;</span></code></pre></figure>
 <p>This line tells your phone’s browser what color to use when filling the status bar. You can remove it if you want, it’s not really necessary.</p>
@@ -170,17 +173,17 @@ layout: compress
 <p>The meat and potatoes of the whole template. It tells Jekyll where to insert yor content. These CSS classes will be useful later on, when we add Semantic UI as our CSS framework.</p>
 <hr />
 <h2 id="includes">Includes</h2>
-<p>Now that we’ve covered what everything in our baseplate does, let’s take a look at the <code class="highlighter-rouge">include</code> tags. There are 4 of them in that layout:</p>
-<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid"><span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="na">metatags</span><span class="p">.</span><span class="na">html</span><span class="w"> </span><span class="na">%}
-{% include navbar</span><span class="p">.</span><span class="na">html</span><span class="w"> </span><span class="na">%}
-{% include header</span><span class="p">.</span><span class="na">html</span><span class="w"> </span><span class="na">%}
-{% include footer</span><span class="p">.</span><span class="na">html</span><span class="w"> </span><span class="p">%}</span></code></pre></figure>
+<p>Now that we’ve covered what everything in our baseplate does, let’s take a look at the <code class="language-plaintext highlighter-rouge">include</code> tags. There are 4 of them in that layout:</p>
+<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid"><span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">metatags.html</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">navbar.html</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">header.html</span><span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">footer.html</span><span class="w"> </span><span class="p">%}</span></code></pre></figure>
 <blockquote>
-  <p>This means that the content of these 4 referenced files should be inserted where the tag is, verbatim. These files should be saved inside (surprise, surprise) <code class="highlighter-rouge">_includes</code>.</p>
+  <p>This means that the content of these 4 referenced files should be inserted where the tag is, verbatim. These files should be saved inside (surprise, surprise) <code class="language-plaintext highlighter-rouge">_includes</code>.</p>
 </blockquote>
-<p>I’ll start off with the <code class="highlighter-rouge">metatags.html</code> file. Head over to <a href="https://github.com/Avyiel/blog-demo/blob/master/_includes/metatags.html">this demo’s repository</a>, and copy its contents to your own <code class="highlighter-rouge">metatags.html</code>. I won’t go into detail, but this include helps other websites display information about your blog, such as title, description, author, etc. You can skip this include if you don’t feel like integrating it, but it doesn’t hurt to have these tags.</p>
+<p>I’ll start off with the <code class="language-plaintext highlighter-rouge">metatags.html</code> file. Head over to <a href="https://github.com/Avyiel/blog-demo/blob/master/_includes/metatags.html">this demo’s repository</a>, and copy its contents to your own <code class="language-plaintext highlighter-rouge">metatags.html</code>. I won’t go into detail, but this include helps other websites display information about your blog, such as title, description, author, etc. You can skip this include if you don’t feel like integrating it, but it doesn’t hurt to have these tags.</p>
 <h3 id="navbar">Navbar</h3>
-<p>Let’s take a look at the navbar now. I opted for an auto-generated list of pages, so that I don’t have to manually input them as I add top-level pages. Start by copying the following code to your <code class="highlighter-rouge">navbar.html</code>.</p>
+<p>Let’s take a look at the navbar now. I opted for an auto-generated list of pages, so that I don’t have to manually input them as I add top-level pages. Start by copying the following code to your <code class="language-plaintext highlighter-rouge">navbar.html</code>.</p>
 <figure class="highlight"><pre><code class="language-html" data-lang="html">{% assign default_paths = site.pages | map: "path" %}
 {% assign page_paths = site.header_pages | default: default_paths %}
 
@@ -228,7 +231,7 @@ layout: compress
 </blockquote>
 <p>This automatically skips paths such as images, stylesheets and blog posts without a permalink. Useful for adding new static pages like an “About” page, or a “Contact”, or a “Projects” page. On mobile, these links fold into a hamburger menu. Hurray responsiveness!</p>
 <h3 id="header">Header</h3>
-<p>Next on this list is the <code class="highlighter-rouge">header.html</code> include. This is an important one, since it’s usually the most eye-catching thing people see when they first load in. I opted for a large banner-like section in my college’s colors, and it’s where I put my title, subtitle and other informational tidbits like publication date.</p>
+<p>Next on this list is the <code class="language-plaintext highlighter-rouge">header.html</code> include. This is an important one, since it’s usually the most eye-catching thing people see when they first load in. I opted for a large banner-like section in my college’s colors, and it’s where I put my title, subtitle and other informational tidbits like publication date.</p>
 <p>On the home page, it’s where my profile picture sits, alongside my name, college degree and (predicted) graduation year, as well as some important links (GitHub, LinkedIn and contact info). I plan to have my resumè in this section at some point in the future.</p>
 <p>So, let’s see some code:</p>
 <figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"site-header"</span> <span class="na">role=</span><span class="s">"banner"</span><span class="nt">&gt;</span>
@@ -298,8 +301,8 @@ layout: compress
 
   {% endif %}
 <span class="nt">&lt;/header&gt;</span></code></pre></figure>
-<p>At this point, you should be able to recognize what’s going on here. The include has a conditional that determines whether we’re in the home page or not, and adjusts accordingly. It also checks for a <code class="highlighter-rouge">post</code> layout to determine whether or not to add the post tagline. Both pages have a title and subtitle, although I use the global <code class="highlighter-rouge">site.title</code> in the home, whereas regular pages get <code class="highlighter-rouge">page.title</code>.</p>
-<p>The action buttons pull their URLs from your <code class="highlighter-rouge">_config.yml</code>, so make sure the information there is correct. It is done like this because these URLs are used in other parts of the site as well (spoiler: the footer).</p>
+<p>At this point, you should be able to recognize what’s going on here. The include has a conditional that determines whether we’re in the home page or not, and adjusts accordingly. It also checks for a <code class="language-plaintext highlighter-rouge">post</code> layout to determine whether or not to add the post tagline. Both pages have a title and subtitle, although I use the global <code class="language-plaintext highlighter-rouge">site.title</code> in the home, whereas regular pages get <code class="language-plaintext highlighter-rouge">page.title</code>.</p>
+<p>The action buttons pull their URLs from your <code class="language-plaintext highlighter-rouge">_config.yml</code>, so make sure the information there is correct. It is done like this because these URLs are used in other parts of the site as well (spoiler: the footer).</p>
 <p>Like before, some CSS classes here are not part of Bootstrap, and instead come from my custom SCSS files (which I’ll cover in Part 3). You can ignore them for now, but do not remove them, since we’ll be using these classes later on.</p>
 <h3 id="footer">Footer</h3>
 <p>The last of our includes is the footer. It is a simple affair, with links to my GitHub page, my twitter (although I do not use it regularly) and my “About” page. Check out the code below:</p>
@@ -354,7 +357,7 @@ layout: compress
 <span class="nt">&lt;/footer&gt;</span></code></pre></figure>
 <p>As you can see, a very simple snippet. We have three links with icons and two lines of text, one regarding GH Pages and the other saying who this website belongs to.</p>
 <h2 id="page-layout">Page Layout</h2>
-<p>With the includes done, we’re left with a few layouts before Jekyll will stop complaining about missing things. Let’s start with the <code class="highlighter-rouge">page</code> layout, as it is the simplest one.</p>
+<p>With the includes done, we’re left with a few layouts before Jekyll will stop complaining about missing things. Let’s start with the <code class="language-plaintext highlighter-rouge">page</code> layout, as it is the simplest one.</p>
 <figure class="highlight"><pre><code class="language-html" data-lang="html">---
 layout: default
 ---
@@ -367,7 +370,7 @@ layout: default
 <span class="nt">&lt;/article&gt;</span></code></pre></figure>
 <p>Yeah, that’s all. Just an article tag with content inside. Our regular pages are just that, regular.</p>
 <h2 id="post-layout">Post Layout</h2>
-<p>A more interesting layout, but still very simple. It lightly implements a <code class="highlighter-rouge">BlogPosting</code> schema by using the <code class="highlighter-rouge">articleBody</code> prop, and lays the groundwork for using Disqus, if you need comments in your posts.</p>
+<p>A more interesting layout, but still very simple. It lightly implements a <code class="language-plaintext highlighter-rouge">BlogPosting</code> schema by using the <code class="language-plaintext highlighter-rouge">articleBody</code> prop, and lays the groundwork for using Disqus, if you need comments in your posts.</p>
 <figure class="highlight"><pre><code class="language-html" data-lang="html">---
 layout: default
 ---
