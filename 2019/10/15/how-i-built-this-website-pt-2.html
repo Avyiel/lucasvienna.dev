@@ -174,10 +174,10 @@ layout: compress
 <hr />
 <h2 id="includes">Includes</h2>
 <p>Now that we’ve covered what everything in our baseplate does, let’s take a look at the <code class="language-plaintext highlighter-rouge">include</code> tags. There are 4 of them in that layout:</p>
-<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid"><span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">metatags.html</span><span class="w"> </span><span class="p">%}</span>
-<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">navbar.html</span><span class="w"> </span><span class="p">%}</span>
-<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">header.html</span><span class="w"> </span><span class="p">%}</span>
-<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span><span class="nx">footer.html</span><span class="w"> </span><span class="p">%}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-liquid" data-lang="liquid"><span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>metatags.html<span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>navbar.html<span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>header.html<span class="w"> </span><span class="p">%}</span>
+<span class="p">{%</span><span class="w"> </span><span class="nt">include</span><span class="w"> </span>footer.html<span class="w"> </span><span class="p">%}</span></code></pre></figure>
 <blockquote>
   <p>This means that the content of these 4 referenced files should be inserted where the tag is, verbatim. These files should be saved inside (surprise, surprise) <code class="language-plaintext highlighter-rouge">_includes</code>.</p>
 </blockquote>
